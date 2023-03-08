@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  position: relative;
+
+  margin: 0 auto;
+  padding: 0;
+
+  background-color: theme("colors.white");
+
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+
+  /* stylelint-disable-next-line unit-allowed-list */
+  font-size: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
