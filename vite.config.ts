@@ -17,7 +17,7 @@ export default defineConfig({
       "@/hooks": "/src/hooks",
       "@/shared": "/src/shared",
       "@/utils": "/src/utils",
-      "@/root": ".",
+      "@/root": "/src/",
     },
   },
 });

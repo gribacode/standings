@@ -21,7 +21,17 @@ module.exports = {
       white: colors.white,
       transparent: colors.transparent,
       black: "#1E1E1E",
+      orange: "#FFAA00",
+      ash: "#282828",
     },
+    screens: {
+      "2xl": "1840px",
+      "xl": "1440px",
+      "lg": "1280px",
+      "md": "1024px",
+      "sm": "580px",
+      "xs": "390px",
+    }
   },
   plugins: [],
 };
