@@ -15,6 +15,7 @@ export default defineConfig({
       "@/layout": "/src/components/layout",
       "@/ui": "/src/components/ui",
       "@/hooks": "/src/hooks",
+      "@/services": "/src/services",
       "@/shared": "/src/shared",
       "@/utils": "/src/utils",
       "@/root": "/src/",

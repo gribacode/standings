@@ -25,6 +25,7 @@
       "@/layout/*": ["components/layout/*"],
       "@/ui/*": ["components/ui/*"],
       "@/hooks/*": ["hooks/*"],
+      "@/services/*": ["services/*"],
       "@/shared/*": ["shared/*"],
       "@/utils/*": ["utils/*"],
       "@/root/*": ["./*"]

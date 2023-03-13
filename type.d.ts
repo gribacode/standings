@@ -17,9 +17,9 @@ declare global {
     NIGERIA_FLAG: "nigeriaFlag",
     GERMANY_FLAG: "germanyFlag",
     ALGERIA_FLAG: "algeriaFlag",
-    THE_NETHERLANDS_FLAG: "theNetherlandsFlag",
+    THE_NETHERLANDS_FLAG: "netherlandsFlag",
     MEXICO_FLAG: "mexicoFlag",
-    COSTA_RICA_FLAG: "costaRicaFlag",
+    COSTA_RICA_FLAG: "costaRicoFlag",
     GREECE_FLAG: "greeceFlag",
     ARGENTINA_FLAG: "argentinaFlag",
     SWITZERLAND_FLAG: "switzerlandFlag",
@@ -51,5 +51,18 @@ declare global {
         strokeColor?: string;
       } & React.ImageElement
     >;
+
+    type Button = FC<
+      {
+        title: string;
+      } & React.ButtonElement
+    >;
+  }
+
+  declare namespace Model {
+    type Team = {
+      name: string;
+      stage: string;
+    };
   }
 }

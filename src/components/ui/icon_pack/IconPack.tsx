@@ -319,7 +319,7 @@ export const IconPack: UI.IconPack = ({ name, className, fillColor, strokeColor 
         </defs>
       </svg>
     ),
-    theNetherlandsFlag: (
+    netherlandsFlag: (
       <svg width="22" height="16" viewBox="0 0 22 16" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_302_659)">
           <g clipPath="url(#clip1_302_659)">
@@ -364,7 +364,7 @@ export const IconPack: UI.IconPack = ({ name, className, fillColor, strokeColor 
         </defs>
       </svg>
     ),
-    costaRicaFlag: (
+    costaRicoFlag: (
       <svg width="22" height="16" viewBox="0 0 22 16" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_302_744)">
           <rect width="22" height="16" rx="2" fill="#1A47B8" />
