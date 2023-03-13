@@ -12,6 +12,7 @@ export default defineConfig({
     alias: {
       "@/assets": "/src/assets",
       "@/blocks": "/src/components/blocks",
+      "@/hooks": "/src/hooks",
       "@/layout": "/src/components/layout",
       "@/ui": "/src/components/ui",
       "@/services": "/src/services",

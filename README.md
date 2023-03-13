@@ -27,6 +27,7 @@ The top level directory structure will be as follows:
 ```
 * assets — global styles
 * components — global shared/reusable components, such as layout, blocks, ui
+* hooks — global hooks
 * services — modules to work with server
 * utils — utilities, helpers, converters, constants, and the like
 ```

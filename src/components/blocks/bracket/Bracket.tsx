@@ -1,7 +1,7 @@
 import type { IRoundProps, IRenderSeedProps } from "react-brackets";
 
 import { Bracket as ReactBracket, Seed, SeedItem, SeedTeam } from "react-brackets";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useThemeSelector } from "@/root/main";
 import { IconPack } from "@/ui/icon_pack/IconPack";
@@ -9,6 +9,7 @@ import { convertStringToCamelCase } from "@/utils/convertStringToCamelCase";
 import { TeamService } from "@/services/Team.service";
 import { generateTeamsGroups } from "@/utils/generateTeamsGroups";
 import { Button } from "@/ui/button/Button";
+import { useEffectOnce } from "@/hooks/useEffectOnce";
 
 export const Bracket = () => {
   const type = useThemeSelector((state) => state.type);
@@ -18,7 +19,7 @@ export const Bracket = () => {
   const [rounds, setRounds] = useState<IRoundProps[]>([]);
   const [buttonTitle, setButtonTitle] = useState<"Play" | "Reset">("Play");
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const getGroupStageTeamsData = async () => {
       const teamsList = await TeamService.getTeams();
       const groupTeams = generateTeamsGroups(teamsList);
@@ -33,9 +34,9 @@ export const Bracket = () => {
     };
 
     getGroupStageTeamsData();
-  }, []);
+  });
 
-  const playMatch = (teams: string[], stage = 0): void => {
+  const playMatch = (teams: string[], step = 0): void => {
     if (teams.length === 1) {
       return;
     }
@@ -50,16 +51,16 @@ export const Bracket = () => {
     setRounds((rounds) => [
       ...rounds,
       {
-        title: stages[stage],
+        title: stages[step],
         seeds: generateTeamsGroups(winnersList),
       },
     ]);
 
-    if (stages[stage].at(-1)) {
+    if (stages[step].at(-1)) {
       setButtonTitle("Reset");
     }
 
-    return playMatch(winnersList, stage + 1);
+    return playMatch(winnersList, step + 1);
   };
 
   const resetMatch = () => {

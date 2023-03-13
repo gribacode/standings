@@ -22,6 +22,7 @@
     "paths": {
       "@/assets/*": ["assets/*"],
       "@/blocks/*": ["components/blocks/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/layout/*": ["components/layout/*"],
       "@/ui/*": ["components/ui/*"],
       "@/services/*": ["services/*"],
