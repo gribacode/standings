@@ -6,7 +6,7 @@ export const Header = () => {
   const type = useThemeSelector((state) => state.type);
 
   return (
-    <div className="h-32 w-full flex items-center justify-between md:px-20 px-2">
+    <header className="h-32 w-full flex items-center justify-between md:px-20 px-2">
       <a href="/" className="flex items-center gap-x-4 cursor-pointer select-none group">
         <IconPack
           name="soccerBall"
@@ -30,6 +30,6 @@ export const Header = () => {
           </div>
         )}
       </div>
-    </div>
+    </header>
   );
 };

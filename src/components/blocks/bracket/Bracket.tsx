@@ -1,13 +1,12 @@
 import type { IRoundProps, IRenderSeedProps } from "react-brackets";
 
 import { Bracket as ReactBracket, Seed, SeedItem, SeedTeam } from "react-brackets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useThemeSelector } from "@/root/main";
 import { IconPack } from "@/ui/icon_pack/IconPack";
 import { convertStringToCamelCase } from "@/utils/convertStringToCamelCase";
 import { TeamService } from "@/services/Team.service";
-import { generateTeamsGroups } from "@/utils/generateTeamsGroups";
 import { Button } from "@/ui/button/Button";
 import { useEffectOnce } from "@/hooks/useEffectOnce";
 
@@ -15,69 +14,86 @@ export const Bracket = () => {
   const type = useThemeSelector((state) => state.type);
   const is2xlResponsive = 1840;
 
+  const [teamsList, setTeamsList] = useState<string[]>([]);
   const [teams, setTeams] = useState<string[]>([]);
   const [rounds, setRounds] = useState<IRoundProps[]>([]);
-  const [buttonTitle, setButtonTitle] = useState<"Play" | "Reset">("Play");
+  const [buttonTitle, setButtonTitle] = useState<"Start" | "Play" | "Restart">("Start");
+  const [step, setStep] = useState<number>(0);
+
+  const playMatch = () => {
+    const stages: string[] = ["1/8 finals", "Quarter-finals", "Semifinals", "Finale", "Winner"];
+    const round: IRoundProps = {
+      title: "",
+      seeds: [],
+    };
+
+    if (teams.length === 1) {
+      setRounds((rounds) => [
+        ...rounds,
+        {
+          title: String(stages.at(-1)),
+          seeds: [
+            {
+              id: step,
+              teams: [{ name: teams[0] }],
+            },
+          ],
+        },
+      ]);
+
+      setTeams(teams);
+      setButtonTitle("Restart");
+      setStep(0);
+    } else if (teams && teams.length % 2 === 0) {
+      const winnersList: string[] = Array(teams.length / 2);
+
+      for (let i = 0, j = 0; i < teams.length; i += 2, ++j) {
+        round.title = stages[step];
+        round.seeds = (round.seeds ?? []).concat({
+          id: j,
+          teams: [
+            {
+              name: teams[i],
+            },
+            { name: teams[i + 1] },
+          ],
+        });
+        winnersList[j] = teams[i + (Math.floor(Math.random() * 99 + 1) % 2)];
+      }
+      setTeams(winnersList);
+      setStep(step + 1);
+    } else {
+      throw Error("Wrong number of commands");
+    }
+
+    if (!step) {
+      setRounds([]);
+      setButtonTitle("Play");
+    }
+
+    setRounds((rounds) => rounds.concat(round));
+  };
 
   useEffectOnce(() => {
     const getGroupStageTeamsData = async () => {
       const teamsList = await TeamService.getTeams();
-      const groupTeams = generateTeamsGroups(teamsList);
 
-      setTeams(teamsList);
-      setRounds(
-        rounds.concat({
-          title: "1/8 finals",
-          seeds: groupTeams,
-        }),
-      );
+      setTeamsList(teamsList);
     };
 
     getGroupStageTeamsData();
   });
 
-  const playMatch = (teams: string[], step = 0): void => {
-    if (teams.length === 1) {
-      return;
+  useEffect(() => {
+    if (buttonTitle === "Restart" || !teams.length) {
+      setTeams(teamsList);
     }
-
-    const winnersList = Array(teams.length / 2);
-    const stages = ["Quarter-finals", "Semifinals", "Finale", "Winner"];
-
-    for (let i = 0, j = 0; i < teams.length; i += 2, ++j) {
-      winnersList[j] = teams[i + (Math.floor(Math.random() * 99 + 1) % 2)];
-    }
-
-    setRounds((rounds) => [
-      ...rounds,
-      {
-        title: stages[step],
-        seeds: generateTeamsGroups(winnersList),
-      },
-    ]);
-
-    if (stages[step].at(-1)) {
-      setButtonTitle("Reset");
-    }
-
-    return playMatch(winnersList, step + 1);
-  };
-
-  const resetMatch = () => {
-    setRounds([
-      {
-        title: "1/8 finals",
-        seeds: generateTeamsGroups(teams),
-      },
-    ]);
-
-    setButtonTitle("Play");
-  };
+  }, [teamsList, teams, buttonTitle]);
 
   return (
     <>
       <div className="flex items-center justify-center">
-        <Button title={buttonTitle} onClick={() => (buttonTitle === "Play" ? playMatch(teams) : resetMatch())} />
+        <Button title={buttonTitle} onClick={() => playMatch()} />
       </div>
       <ReactBracket
         bracketClassName="2xl:pl-40 md:px-20 px-2"
@@ -103,25 +119,13 @@ export const Bracket = () => {
                   }`}>
                   <div className="flex items-center">
                     <div>
-                      <IconPack
-                        name={
-                          `${convertStringToCamelCase(
-                            String(seed.teams[0]?.name),
-                          )}Flag` as (typeof IconPackNames)[keyof typeof IconPackNames]
-                        }
-                      />
+                      <IconPack name={`${convertStringToCamelCase(String(seed.teams[0]?.name))}Flag` as IconPackNames} />
                     </div>
                     <SeedTeam className={type === "Light" ? "text-black" : "text-orange"}>{seed.teams[0]?.name}</SeedTeam>
                   </div>
                   <div className="flex items-center">
                     <div>
-                      <IconPack
-                        name={
-                          `${convertStringToCamelCase(
-                            String(seed.teams[1]?.name),
-                          )}Flag` as (typeof IconPackNames)[keyof typeof IconPackNames]
-                        }
-                      />
+                      <IconPack name={`${convertStringToCamelCase(String(seed.teams[1]?.name))}Flag` as IconPackNames} />
                     </div>
                     <SeedTeam className={type === "Light" ? "text-ash opacity-75" : "text-white"}>
                       {seed.teams[1]?.name}

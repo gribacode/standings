@@ -1,4 +1,4 @@
-export const IconPack: UI.IconPack = ({ name, className, fillColor, strokeColor }) => {
+export const IconPack: Component.IconPack = ({ name, className, fillColor, strokeColor }) => {
   const colorForFill = fillColor ? fillColor : "#FFAA00";
   const colorForStroke = strokeColor ? strokeColor : "#1E1E1E";
 

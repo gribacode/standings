@@ -7,7 +7,7 @@ export const Footer = () => {
   const type = useThemeSelector((state) => state.type);
 
   return (
-    <div className="flex items-center justify-center sm:gap-x-14 gap-x-7 py-28">
+    <footer className="flex items-center justify-center sm:gap-x-14 gap-x-7 py-28">
       {socialMediaLinks.map((link) => (
         <a href="#" key={link}>
           <IconPack
@@ -17,6 +17,6 @@ export const Footer = () => {
           />
         </a>
       ))}
-    </div>
+    </footer>
   );
 };

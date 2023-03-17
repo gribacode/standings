@@ -1,6 +1,6 @@
 import { useThemeSelector } from "@/root/main";
 
-export const Button: UI.Button = ({ title, ...props }) => {
+export const Button: Component.Button = ({ title, ...props }) => {
   const type = useThemeSelector((state) => state.type);
 
   return (
