@@ -11,24 +11,30 @@ createServer({
   routes() {
     this.namespace = "api";
 
-    this.get("/teams", () => [
-      "Brazil",
-      "Chile",
-      "Colombia",
-      "Uruguay",
-      "France",
-      "Nigeria",
-      "Germany",
-      "Algeria",
-      "Netherlands",
-      "Mexico",
-      "Costa Rico",
-      "Greece",
-      "Argentina",
-      "Switzerland",
-      "Belgium",
-      "United States",
-    ]);
+    this.get("/teams", () => {
+      const teamsData: Utils.MinArrayLength<string, 16> = [
+        "Brazil",
+        "Chile",
+        "Colombia",
+        "Uruguay",
+        "France",
+        "Nigeria",
+        "Germany",
+        "Algeria",
+        "Netherlands",
+        "Mexico",
+        "Costa Rico",
+        "Greece",
+        "Argentina",
+        "Switzerland",
+        "Belgium",
+        "United States",
+      ];
+
+      const shuffledTeamsData = [...teamsData].sort(() => 0.5 - Math.random());
+
+      return shuffledTeamsData.slice(0, 16);
+    });
   },
 });
 

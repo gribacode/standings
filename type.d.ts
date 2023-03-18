@@ -63,4 +63,10 @@ declare global {
       children: ReactNode;
     }>;
   }
+
+  namespace Utils {
+    type MinArrayLength<T, N extends number, R extends readonly T[] = []> = R["length"] extends N
+      ? [...R, ...T[]]
+      : MinArrayLength<T, N, readonly [T, ...R]>;
+  }
 }

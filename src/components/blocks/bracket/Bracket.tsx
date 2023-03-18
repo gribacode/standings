@@ -8,13 +8,11 @@ import { IconPack } from "@/ui/icon_pack/IconPack";
 import { convertStringToCamelCase } from "@/utils/convertStringToCamelCase";
 import { TeamService } from "@/services/Team.service";
 import { Button } from "@/ui/button/Button";
-import { useEffectOnce } from "@/hooks/useEffectOnce";
 
 export const Bracket = () => {
   const type = useThemeSelector((state) => state.type);
   const is2xlResponsive = 1840;
 
-  const [teamsList, setTeamsList] = useState<string[]>([]);
   const [teams, setTeams] = useState<string[]>([]);
   const [rounds, setRounds] = useState<IRoundProps[]>([]);
   const [buttonTitle, setButtonTitle] = useState<"Start" | "Play" | "Restart">("Start");
@@ -27,10 +25,9 @@ export const Bracket = () => {
       seeds: [],
     };
 
-    if (teams.length === 1) {
-      setRounds((rounds) => [
-        ...rounds,
-        {
+    if (teams.length === 1 && step) {
+      setRounds((rounds) =>
+        rounds.concat({
           title: String(stages.at(-1)),
           seeds: [
             {
@@ -38,10 +35,9 @@ export const Bracket = () => {
               teams: [{ name: teams[0] }],
             },
           ],
-        },
-      ]);
+        }),
+      );
 
-      setTeams(teams);
       setButtonTitle("Restart");
       setStep(0);
     } else if (teams && teams.length % 2 === 0) {
@@ -67,28 +63,24 @@ export const Bracket = () => {
     }
 
     if (!step) {
-      setRounds([]);
+      setRounds((rounds) => rounds.splice(0, rounds.length));
       setButtonTitle("Play");
     }
 
     setRounds((rounds) => rounds.concat(round));
   };
 
-  useEffectOnce(() => {
+  useEffect(() => {
     const getGroupStageTeamsData = async () => {
       const teamsList = await TeamService.getTeams();
 
-      setTeamsList(teamsList);
+      if (buttonTitle === "Restart" || !teams.length) {
+        setTeams(teamsList);
+      }
     };
 
     getGroupStageTeamsData();
-  });
-
-  useEffect(() => {
-    if (buttonTitle === "Restart" || !teams.length) {
-      setTeams(teamsList);
-    }
-  }, [teamsList, teams, buttonTitle]);
+  }, [buttonTitle]);
 
   return (
     <>
@@ -121,13 +113,13 @@ export const Bracket = () => {
                     <div>
                       <IconPack name={`${convertStringToCamelCase(String(seed.teams[0]?.name))}Flag` as IconPackNames} />
                     </div>
-                    <SeedTeam className={type === "Light" ? "text-black" : "text-orange"}>{seed.teams[0]?.name}</SeedTeam>
+                    <SeedTeam className={type === "Light" ? "text-black" : "text-white"}>{seed.teams[0]?.name}</SeedTeam>
                   </div>
                   <div className="flex items-center">
                     <div>
                       <IconPack name={`${convertStringToCamelCase(String(seed.teams[1]?.name))}Flag` as IconPackNames} />
                     </div>
-                    <SeedTeam className={type === "Light" ? "text-ash opacity-75" : "text-white"}>
+                    <SeedTeam className={type === "Light" ? "text-ash opacity-75" : "text-white opacity-75"}>
                       {seed.teams[1]?.name}
                     </SeedTeam>
                   </div>
