@@ -3,6 +3,7 @@
 ## Quickstart
 
 ```sh
+cp .env.example .env.local
 docker-compose up
 ```
 

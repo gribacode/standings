@@ -2,6 +2,8 @@ version: "2.4"
 services:
   client:
     image: node:16.15-alpine
+    env_file:
+      - .env.local
     working_dir: /app
     command: sh -c "npm install --legacy-peer-deps && npm run dev"
     volumes:

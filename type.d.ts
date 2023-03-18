@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 declare global {
   type IconPackNames =
     | "soccerBall"
@@ -55,5 +55,12 @@ declare global {
         title: string;
       } & React.ButtonElement
     >;
+
+    type Meta = FC<{
+      title: string;
+      description: string;
+      image: string;
+      children: ReactNode;
+    }>;
   }
 }
