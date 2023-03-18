@@ -1,7 +1,7 @@
 import { Bracket } from "@/blocks/bracket/Bracket";
 import { Footer } from "@/blocks/footer/Footer";
 import { Header } from "@/blocks/header/Header";
-import { MainScreen } from "@/blocks/main_screen/MainScreen";
+import { MainScreen } from "@/blocks/mainScreen/MainScreen";
 import { Meta } from "@/layout/Meta";
 import { useThemeSelector } from "./main";
 

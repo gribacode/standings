@@ -4,7 +4,7 @@ import { Bracket as ReactBracket, Seed, SeedItem, SeedTeam } from "react-bracket
 import { useEffect, useState } from "react";
 
 import { useThemeSelector } from "@/root/main";
-import { IconPack } from "@/ui/icon_pack/IconPack";
+import { IconPack } from "@/ui/iconPack/IconPack";
 import { convertStringToCamelCase } from "@/utils/convertStringToCamelCase";
 import { TeamService } from "@/services/Team.service";
 import { Button } from "@/ui/button/Button";

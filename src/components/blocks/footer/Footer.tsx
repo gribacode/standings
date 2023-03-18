@@ -1,5 +1,5 @@
 import { useThemeSelector } from "@/root/main";
-import { IconPack } from "@/ui/icon_pack/IconPack";
+import { IconPack } from "@/ui/iconPack/IconPack";
 
 const socialMediaLinks = ["instagram", "youtube", "twitter", "google"] as const;
 

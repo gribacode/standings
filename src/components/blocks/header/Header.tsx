@@ -1,4 +1,4 @@
-import { IconPack } from "@/ui/icon_pack/IconPack";
+import { IconPack } from "@/ui/iconPack/IconPack";
 import { useThemeSelector, useThemeUpdate } from "@/root/main";
 
 export const Header = () => {
